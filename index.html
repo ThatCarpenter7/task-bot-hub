@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Task Bot Hub — unlock for $0.99 to use on-page AI tools and hand tasks to four dedicated Task Bots." />
+  <meta name="color-scheme" content="light dark" />
+  <title>Task Bot Hub — $0.99 unlock</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M18 34l10 10 18-22' stroke='%23fff' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <script src="config.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to tools</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Task Bot Hub home">
+        <span class="brand-mark" aria-hidden="true">✓</span>
+        <span class="brand-name">Task Bot Hub</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#fleet">Fleet</a>
+        <a href="#bots">Task Bots</a>
+        <a href="#how">How it works</a>
+        <a href="#workspace">Tools</a>
+        <button type="button" class="btn btn-sm btn-primary" id="headerUnlockBtn">Unlock $0.99</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Four dedicated agents · $0.99 unlock</p>
+          <h1>Basic AI on the page.<br />Real tasks in Task Bot.</h1>
+          <p class="lede">
+            Unlock once for <strong>$0.99 USD</strong> to use the on-page chat tools
+            (summarize, draft email, brainstorm, explain) and hand bigger jobs to one
+            of four Task Bots in the Grok Bot / Cursor app. This site is static —
+            Task Bots are not server-side embeds.
+          </p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary btn-lg" id="heroUnlockBtn">
+              Unlock for $0.99
+            </button>
+            <a class="btn btn-ghost btn-lg" href="#bots">Meet the bots</a>
+          </div>
+          <p class="note" id="unlockStatus" role="status"></p>
+        </div>
+
+        <aside class="promo-card" aria-label="What you get">
+          <h2 class="promo-title">What $0.99 unlocks</h2>
+          <ul class="promo-list">
+            <li>On-page AI chat for quick tasks</li>
+            <li>Quick actions: summarize, email, brainstorm, explain</li>
+            <li>Handoff to any of 4 Task Bots</li>
+            <li>Conversation saved in your browser</li>
+          </ul>
+          <p class="promo-footnote muted">
+            No tracking scripts. Stripe handles payment. API keys never belong in this public repo.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="fleet" id="fleet">
+      <div class="container">
+        <h2>Agent fleet</h2>
+        <p class="section-lede">
+          Overseer is free to open anytime (efficiencies &amp; revenue). The four Task Bots
+          below are the paid handoff options once you unlock chat.
+        </p>
+        <div class="overseer-card" id="overseerCard">
+          <!-- filled by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <section class="bots" id="bots">
+      <div class="container">
+        <h2>Choose a Task Bot</h2>
+        <p class="section-lede">Pick which agent should receive handoffs after unlock. You can change this anytime.</p>
+        <div class="bot-grid" id="botGrid" role="radiogroup" aria-label="Select Task Bot"></div>
+      </div>
+    </section>
+
+    <section class="workspace-wrap" id="workspace">
+      <div class="container">
+        <div class="workspace" id="workspacePanel">
+          <div class="paywall" id="paywall" hidden>
+            <div class="paywall-card">
+              <h2>Unlock to use chat &amp; tools</h2>
+              <p>
+                One-time <strong>$0.99 USD</strong> unlocks on-page AI helpers and Task Bot handoff
+                for this browser. Pay securely with Stripe.
+              </p>
+              <a class="btn btn-primary btn-lg" id="paywallCta" href="#" rel="noopener">
+                Unlock for $0.99
+              </a>
+              <p class="muted paywall-note" id="paywallNote"></p>
+            </div>
+          </div>
+
+          <div class="workspace-inner" id="workspaceInner">
+            <div class="chat-panel" id="chat" aria-label="Task chat">
+              <div class="chat-header">
+                <div class="chat-title">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong id="chatBotName">Task Bot Hub</strong>
+                    <span class="muted" id="chatModeLabel">Collect + handoff</span>
+                  </div>
+                </div>
+                <div class="chat-header-actions">
+                  <button type="button" class="btn btn-sm btn-ghost" id="clearChat" title="Clear conversation">
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+              <div class="chips" id="quickActions" aria-label="Quick actions">
+                <button type="button" class="chip" data-prompt="Summarize the following text clearly and briefly:\n\n">Summarize text</button>
+                <button type="button" class="chip" data-prompt="Write a short, friendly email about:\n\n">Write a short email</button>
+                <button type="button" class="chip" data-prompt="Brainstorm creative ideas for:\n\n">Brainstorm ideas</button>
+                <button type="button" class="chip" data-prompt="Explain this simply, as if to a curious 10-year-old:\n\n">Explain simply</button>
+              </div>
+
+              <div class="chat-messages" id="messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+
+              <form class="chat-form" id="chatForm" autocomplete="off">
+                <label class="sr-only" for="taskInput">Your message or task</label>
+                <textarea
+                  id="taskInput"
+                  name="task"
+                  rows="2"
+                  maxlength="8000"
+                  placeholder="Ask for a quick AI task, or describe work to hand to the selected Task Bot…"
+                  required
+                ></textarea>
+                <div class="chat-form-actions">
+                  <label class="handoff-toggle">
+                    <input type="checkbox" id="alsoHandoff" />
+                    Also open selected Task Bot
+                  </label>
+                  <button type="submit" class="btn btn-primary" id="sendBtn">Send</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how" id="how">
+      <div class="container">
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li>
+            <span class="step-num">1</span>
+            <div>
+              <h3>Unlock once</h3>
+              <p>Pay $0.99 via Stripe. This browser stays unlocked (localStorage).</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>
+              <h3>Use quick AI tools</h3>
+              <p>If an AI endpoint is configured, chat runs through xAI-compatible completions. Otherwise requests are collected for handoff.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>
+              <h3>Hand off to a Task Bot</h3>
+              <p>Open one of four agents in the Grok Bot / Cursor app for real task fulfillment.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>
+        <a href="grokbot://app/v1/agent?id=3ed67bf6-5dba-4d77-9709-c204595ec6b8">Overseer</a>
+        · Task Bots
+        <a href="grokbot://app/v1/agent?id=1e68c0e4-7df0-48fa-900d-adea23650e12">1</a> ·
+        <a href="grokbot://app/v1/agent?id=a5edb3b1-8cbf-4347-ab76-5b3491ba55b3">2</a> ·
+        <a href="grokbot://app/v1/agent?id=cd8f2009-198d-4173-b9aa-a965f64315b0">3</a> ·
+        <a href="grokbot://app/v1/agent?id=526848c3-39a9-45b8-a4b2-2e4f6dd699c0">4</a>.
+        No tracking.
+      </p>
+      <p class="muted">© <span id="year"></span> Task Bot Hub</p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
